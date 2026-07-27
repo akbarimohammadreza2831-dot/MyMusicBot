@@ -3,6 +3,26 @@ import yt_dlp
 import os
 import asyncio
 from shazamio import Shazam
+from http.server import BaseHTTPRequestHandler, HTTPServer
+import threading
+
+# --- این بخش برای راضی کردن سرور رندر اضافه شده است ---
+class DummyHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'text/html')
+        self.end_headers()
+        self.wfile.write(b"Bot is running successfully!")
+
+def run_web():
+    port = int(os.environ.get("PORT", 8080))
+    server_address = ('0.0.0.0', port)
+    httpd = HTTPServer(server_address, DummyHandler)
+    httpd.serve_forever()
+
+# اجرای سرور الکی در پس‌زمینه
+threading.Thread(target=run_web, daemon=True).start()
+# --------------------------------------------------------
 
 # توکن خودت رو دقیقاً بین دو تا کوتیشن پایین بذار
 TOKEN = '8956987417:AAFkXir72fzABkCxxdAfY3gyRubB0uZLwO0'
@@ -77,7 +97,7 @@ def handle_link(message):
         if os.path.exists(full_mp3): os.remove(full_mp3)
 
     except Exception as e:
-        bot.edit_message_text("❌ یه مشکلی پیش اومد. شاید لینک خرابه.", message.chat.id, msg.message_id)
+        bot.edit_message_text("❌ یه مشکلی پیش اومد. شاید لینک خرابه یا ویدیو پرایوته.", message.chat.id, msg.message_id)
         if os.path.exists(f"{temp_audio}.mp3"): os.remove(f"{temp_audio}.mp3")
         if os.path.exists(f"{full_audio}.mp3"): os.remove(f"{full_audio}.mp3")
 
