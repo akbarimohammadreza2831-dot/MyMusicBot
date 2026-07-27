@@ -25,7 +25,7 @@ threading.Thread(target=run_web, daemon=True).start()
 # --------------------------------------------------------
 
 # توکن خودت رو دقیقاً بین دو تا کوتیشن پایین بذار
-TOKEN = '8956987417:AAFkXir72fzABkCxxdAfY3gyRubB0uZLwO0'
+TOKEN = 'توکن_شما_در_اینجا'
 bot = telebot.TeleBot(TOKEN)
 
 async def recognize_song(file_path):
@@ -97,7 +97,8 @@ def handle_link(message):
         if os.path.exists(full_mp3): os.remove(full_mp3)
 
     except Exception as e:
-        bot.edit_message_text("❌ یه مشکلی پیش اومد. شاید لینک خرابه یا ویدیو پرایوته.", message.chat.id, msg.message_id)
+        # تغییر در این قسمت انجام شده تا ارور انگلیسی و دقیق ارسال شود
+        bot.edit_message_text(f"❌ ارور سیستم:\n{str(e)}", message.chat.id, msg.message_id)
         if os.path.exists(f"{temp_audio}.mp3"): os.remove(f"{temp_audio}.mp3")
         if os.path.exists(f"{full_audio}.mp3"): os.remove(f"{full_audio}.mp3")
 
