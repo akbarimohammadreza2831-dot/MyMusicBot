@@ -48,11 +48,13 @@ def handle_link(message):
     temp_audio = f"temp_{message.chat.id}"
     full_audio = f"full_{message.chat.id}"
     
+    # اضافه شدن کوکی برای دور زدن ربات‌یاب
     ydl_opts_snippet = {
         'format': 'bestaudio/best',
         'outtmpl': f"{temp_audio}.%(ext)s",
         'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3', 'preferredquality': '192'}],
         'quiet': True,
+        'cookiefile': 'cookies.txt', 
     }
 
     try:
@@ -75,12 +77,14 @@ def handle_link(message):
 
         bot.edit_message_text(f"✅ آهنگ رو شناختم!\nاسم آهنگ: {search_query}\n\n📥 حالا دارم میرم تو اینترنت نسخه کاملش رو برات دانلود کنم...", message.chat.id, msg.message_id)
 
+        # اضافه شدن کوکی برای دور زدن ربات‌یاب یوتیوب هنگام جستجو
         ydl_opts_search = {
             'format': 'bestaudio/best',
             'default_search': 'ytsearch1',
             'outtmpl': f"{full_audio}.%(ext)s",
             'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3', 'preferredquality': '192'}],
             'quiet': True,
+            'cookiefile': 'cookies.txt',
         }
 
         with yt_dlp.YoutubeDL(ydl_opts_search) as ydl_search:
@@ -97,7 +101,6 @@ def handle_link(message):
         if os.path.exists(full_mp3): os.remove(full_mp3)
 
     except Exception as e:
-        # تغییر در این قسمت انجام شده تا ارور انگلیسی و دقیق ارسال شود
         bot.edit_message_text(f"❌ ارور سیستم:\n{str(e)}", message.chat.id, msg.message_id)
         if os.path.exists(f"{temp_audio}.mp3"): os.remove(f"{temp_audio}.mp3")
         if os.path.exists(f"{full_audio}.mp3"): os.remove(f"{full_audio}.mp3")
