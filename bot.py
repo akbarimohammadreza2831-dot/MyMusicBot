@@ -25,7 +25,7 @@ threading.Thread(target=run_web, daemon=True).start()
 # --------------------------------------------------------
 
 # توکن خودت رو دقیقاً بین دو تا کوتیشن پایین بذار
-TOKEN = 'توکن_شما_در_اینجا'
+TOKEN = '8956987417:AAFkXir72fzABkCxxdAfY3gyRubB0uZLwO0'
 bot = telebot.TeleBot(TOKEN)
 
 async def recognize_song(file_path):
