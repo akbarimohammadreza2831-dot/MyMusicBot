@@ -48,9 +48,9 @@ def handle_link(message):
     temp_audio = f"temp_{message.chat.id}"
     full_audio = f"full_{message.chat.id}"
     
-    # اضافه شدن کوکی برای دور زدن ربات‌یاب
+    # تغییر مهم: فرمت روی 'best' تنظیم شد تا هر ویدیویی با هر ساختاری را بتواند دانلود کند
     ydl_opts_snippet = {
-        'format': 'bestaudio/best',
+        'format': 'best',
         'outtmpl': f"{temp_audio}.%(ext)s",
         'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3', 'preferredquality': '192'}],
         'quiet': True,
@@ -77,9 +77,9 @@ def handle_link(message):
 
         bot.edit_message_text(f"✅ آهنگ رو شناختم!\nاسم آهنگ: {search_query}\n\n📥 حالا دارم میرم تو اینترنت نسخه کاملش رو برات دانلود کنم...", message.chat.id, msg.message_id)
 
-        # اضافه شدن کوکی برای دور زدن ربات‌یاب یوتیوب هنگام جستجو
+        # تغییر مهم: فرمت روی 'best' تنظیم شد
         ydl_opts_search = {
-            'format': 'bestaudio/best',
+            'format': 'best',
             'default_search': 'ytsearch1',
             'outtmpl': f"{full_audio}.%(ext)s",
             'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3', 'preferredquality': '192'}],
